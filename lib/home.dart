@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/pages/chatpage.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -7,8 +8,19 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  @override
+class _HomeScreenState extends State<HomeScreen>
+with SingleTickerProviderStateMixin
+ {
+  late TabController _controller;
+
+ 
+   @override
+  void initState() {
+    super.initState();
+    _controller=TabController(length: 4, vsync: this,initialIndex: 1);
+    
+  }
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
@@ -35,7 +47,39 @@ class _HomeScreenState extends State<HomeScreen> {
               
             })
         ],
+
+        bottom: TabBar(
+          tabs: [
+            Tab(
+              icon: Icon(Icons.camera_alt),
+            ),
+            Tab(
+              text: "chats" ,
+            ),
+            Tab(
+              text: "status",
+            ),
+            Tab(
+              text: "calls",
+            ),
+          ],
+          controller: _controller,
+
+
+          ),
+
+
         ) ,
+        body: TabBarView(
+          controller: _controller,
+          children: [
+            Text("camera"),
+            ChatPage(),
+            Text("status"),
+            Text("calls"),
+          ],
+
+        ),
         
     );
   }
