@@ -11,13 +11,17 @@ class ChatPage extends StatelessWidget {
         name: "adhologam",
         isGroup: true,
         updatedAt: "9:00 am",
-        message: "good  morning"),
+        message: "good  morning",
+        status: "group description is here"),
+       
         Chat(
         avatar:"https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80",
         name: "ravi",
         isGroup: false,
         updatedAt: "12:00 am",
-        message: "hey"),
+        message: "hey",
+        status: "online"),
+        
 
          Chat(
         avatar:
@@ -25,13 +29,16 @@ class ChatPage extends StatelessWidget {
         name: "friends",
         isGroup: true,
         updatedAt: "9:00 am",
-        message: "good night"),
+        message: "good night",
+        status: "group description is here"),
+
         Chat(
         avatar:"",
         name: "asim",
         isGroup: false,
         updatedAt: "12:00 am",
-        message: "where"),
+        message: "where",
+        status:"offline" ),
         
   ];
 

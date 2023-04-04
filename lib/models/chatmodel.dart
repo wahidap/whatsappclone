@@ -11,6 +11,7 @@ class Chat {
         this.isGroup,
          this.updatedAt,
          this.message,
+         this.status,
     });
 
     String? avatar;
@@ -18,6 +19,7 @@ class Chat {
     bool? isGroup;
     String? updatedAt;
     String? message;
+    String? status;
 
     factory Chat.fromJson(Map<String, dynamic> json) => Chat(
         avatar: json["avatar"],
@@ -25,6 +27,7 @@ class Chat {
         isGroup: json["isGroup"],
         updatedAt: json["updatedAt"],
         message: json["message"],
+        status: json["status"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -33,5 +36,6 @@ class Chat {
         "isGroup": isGroup,
         "updatedAt": updatedAt,
         "message": message,
+        "status": status,
     };
 }
