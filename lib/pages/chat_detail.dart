@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/models/chatmodel.dart';
+import 'package:whatsapp_clone/models/singlechat_model.dart';
+import 'package:whatsapp_clone/pages/chatbubble.dart';
 import 'package:whatsapp_clone/widgets/utility_widget.dart';
 
 class ChatDetails extends StatefulWidget {
@@ -11,6 +13,19 @@ class ChatDetails extends StatefulWidget {
 }
 
 class _ChatDetailsState extends State<ChatDetails> {
+  List<SingleChat>messageList=[
+SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
+
+  ];
+  bool showSend = false;
+  bool showEmoji = true;
+  TextEditingController messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,20 +79,73 @@ class _ChatDetailsState extends State<ChatDetails> {
           )
         ],
       ),
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Image.network(
+      body: Container(
+        child: Stack(
+          children: [
+            Image.network(
               "https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg",
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               fit: BoxFit.cover,
             ),
-          ),
-          ListView.builder(itemBuilder: (context, index) {
-            return Text("hello");
-          },)
-        ],
+            ListView.builder(
+              itemCount: messageList.length,
+              itemBuilder: (context, index) {
+                return ChatBubble(message: messageList[index],);
+              },
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width - 70,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(35)),
+
+                        child: TextField(
+                          controller: messageController,
+                          onTap: () {
+                            if (!showEmoji) {
+                              setState(() {
+                                showEmoji = true;
+                              });
+                            }
+                          },
+                          onChanged: (value) {
+                            if (value.length > 0) {
+                              setState(() {
+                                showSend = true;
+                              });
+                            } else {
+                              setState(() {
+                                showSend = false;
+                              });
+                            }
+                          },
+                        ),
+                        ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            // messageList.add();
+                          });
+                        },
+                        child: (showSend) ? Icon(Icons.send) : Icon(Icons.mic),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
