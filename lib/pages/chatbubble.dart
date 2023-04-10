@@ -25,7 +25,16 @@ class ChatBubble extends StatelessWidget {
                     top: 14,
                     right: 3,
 
-                    child:Text("5.00am",style: TextStyle(fontSize: 10),) ),
+                    child:Row(
+                      children: [
+                        Text(message.sendAt!,style: TextStyle(fontSize: 10),),
+                        (message.isSend!)?
+                        Icon(Icons.done_all,size: 12, color:(message.isReaded!)? Colors.blue:Colors.grey,):Container(),
+
+
+                      ],
+                    
+                    ) ),
                 ],
               ),
             ),

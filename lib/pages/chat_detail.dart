@@ -20,7 +20,7 @@ SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
 SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
 SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
 SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
+SingleChat(isReaded: false,isSend: true,message: "blah",sendAt: "8.00am"),
 
   ];
   bool showSend = false;
@@ -129,6 +129,24 @@ SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
                               });
                             }
                           },
+                          decoration: InputDecoration(prefix:IconButton(onPressed: () {
+                            if(showEmoji)
+                            {
+                              FocusScope.of(context).unfocus();
+                            }
+                            setState(() {
+                              showEmoji=!showEmoji;
+                            });
+
+                          },
+                          icon: (showEmoji)?
+                          Icon(Icons.emoji_emotions_outlined): Icon(Icons.keyboard)
+                          ),
+                          border: InputBorder.none,
+                          hintText: "message",
+                          
+                          ),
+
                         ),
                         ),
                       FloatingActionButton(
