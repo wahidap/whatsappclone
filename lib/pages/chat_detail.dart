@@ -13,15 +13,18 @@ class ChatDetails extends StatefulWidget {
 }
 
 class _ChatDetailsState extends State<ChatDetails> {
-  List<SingleChat>messageList=[
-SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: true,isSend: true,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: false,isSend: false,message: "blah",sendAt: "8.00am"),
-SingleChat(isReaded: false,isSend: true,message: "blah",sendAt: "8.00am"),
-
+  List<SingleChat> messageList = [
+    SingleChat(isReaded: true, isSend: true, message: "blah", sendAt: "8.00am"),
+    SingleChat(
+        isReaded: false, isSend: false, message: "blah", sendAt: "8.00am"),
+    SingleChat(isReaded: true, isSend: true, message: "blah", sendAt: "8.00am"),
+    SingleChat(
+        isReaded: false, isSend: false, message: "blah", sendAt: "8.00am"),
+    SingleChat(isReaded: true, isSend: true, message: "blah", sendAt: "8.00am"),
+    SingleChat(
+        isReaded: false, isSend: false, message: "blah", sendAt: "8.00am"),
+    SingleChat(
+        isReaded: false, isSend: true, message: "blah", sendAt: "8.00am"),
   ];
   bool showSend = false;
   bool showEmoji = true;
@@ -91,7 +94,9 @@ SingleChat(isReaded: false,isSend: true,message: "blah",sendAt: "8.00am"),
             ListView.builder(
               itemCount: messageList.length,
               itemBuilder: (context, index) {
-                return ChatBubble(message: messageList[index],);
+                return ChatBubble(
+                  message: messageList[index],
+                );
               },
             ),
             Align(
@@ -108,7 +113,6 @@ SingleChat(isReaded: false,isSend: true,message: "blah",sendAt: "8.00am"),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(35)),
-
                         child: TextField(
                           controller: messageController,
                           onTap: () {
@@ -129,33 +133,59 @@ SingleChat(isReaded: false,isSend: true,message: "blah",sendAt: "8.00am"),
                               });
                             }
                           },
-                          decoration: InputDecoration(prefix:IconButton(onPressed: () {
-                            if(showEmoji)
-                            {
-                              FocusScope.of(context).unfocus();
-                            }
+                          decoration: InputDecoration(
+                            prefixIcon: IconButton(
+                              onPressed: () {
+                                if (showEmoji) {
+                                  FocusScope.of(context).unfocus();
+                                }
+                                setState(() {
+                                  showEmoji = !showEmoji;
+                                });
+                              },
+                              icon: (showEmoji)
+                                  ? const Icon(Icons.emoji_emotions_outlined,color: Colors.teal)
+                                  : const Icon(Icons.keyboard,color: Colors.teal),
+                            ),
+                            border: InputBorder.none,
+                            hintText: "message",
+                            suffixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                    onPressed: () => showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) => bottomMenu(),
+                                        ),
+                                    icon: Icon(Icons.attach_file,color: Colors.teal)),
+                                Icon(Icons.currency_rupee_rounded,color: Colors.teal),
+                                Icon(Icons.camera_alt,color: Colors.teal),
+                                UtilityWidget().widthSpacer(9),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2, horizontal: 2),
+                        child: FloatingActionButton(
+                          onPressed: () {
                             setState(() {
-                              showEmoji=!showEmoji;
+                              messageList.add(
+                                SingleChat(
+                                  isReaded: false,
+                                  isSend: true,
+                                  message: messageController.text,
+                                  sendAt: "5.00am",
+                                ),
+                              );
                             });
-
+                            messageController.clear();
                           },
-                          icon: (showEmoji)?
-                          Icon(Icons.emoji_emotions_outlined): Icon(Icons.keyboard)
-                          ),
-                          border: InputBorder.none,
-                          hintText: "message",
-                          
-                          ),
-
+                          child:
+                              (showSend)?Icon(Icons.send,) : Icon(Icons.mic,),
                         ),
-                        ),
-                      FloatingActionButton(
-                        onPressed: () {
-                          setState(() {
-                            // messageList.add();
-                          });
-                        },
-                        child: (showSend) ? Icon(Icons.send) : Icon(Icons.mic),
                       )
                     ],
                   ),
@@ -165,6 +195,56 @@ SingleChat(isReaded: false,isSend: true,message: "blah",sendAt: "8.00am"),
           ],
         ),
       ),
+    );
+  }
+
+  Container bottomMenu() {
+    return Container(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),width: 300, height: 300,
+      child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+
+              menuIcon(text: "Document", icon: Icon(Icons.insert_drive_file,color: Colors.white,), color: Colors.indigo),
+              menuIcon(text: "Camera", icon: Icon(Icons.camera_alt,color: Colors.white,), color: Colors.pink),
+              menuIcon(text: "Gallery", icon: Icon(Icons.insert_photo,color: Colors.white,), color: Colors.purple)
+              // Icon(Icons.insert_drive_file),
+              // Icon(Icons.insert_drive_file),
+              // Icon(Icons.insert_drive_file),
+            ],
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              menuIcon(text: "Audio", icon: Icon(Icons.headphones,color: Colors.white,), color: Colors.orange),
+              menuIcon(text: "Location", icon: Icon(Icons.location_pin,color: Colors.white,), color: Colors.green),
+              menuIcon(text: "Payment", icon: Icon(Icons.currency_rupee_rounded,color: Colors.white,), color: Colors.teal)
+              // Icon(Icons.insert_drive_file),
+              // Icon(Icons.insert_drive_file),
+              // Icon(Icons.insert_drive_file),
+            ],
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+            menuIcon(text: "Contact", icon: Icon(Icons.person,color: Colors.white,), color: Colors.blue),
+            menuIcon(text: "Poll", icon: Icon(Icons.bar_chart,color: Colors.white,), color: Colors.teal),
+            UtilityWidget().widthSpacer(52),
+              // Icon(Icons.insert_drive_file),
+              // Icon(Icons.insert_drive_file),
+              // Icon(Icons.insert_drive_file),
+            ],
+          ),
+        ],
+      ),
+
+      
+    );
+  }
+  Column menuIcon({required String text,required Icon icon,required Color color}){
+    return Column(
+      children: [
+        CircleAvatar(radius: 30,backgroundColor: color,child: icon,),
+        Text(text),
+      ],
     );
   }
 }
