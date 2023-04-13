@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/models/chatmodel.dart';
 import 'package:whatsapp_clone/models/singlechat_model.dart';
@@ -29,6 +30,7 @@ class _ChatDetailsState extends State<ChatDetails> {
   bool showSend = false;
   bool showEmoji = true;
   TextEditingController messageController = TextEditingController();
+  FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +116,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(35)),
                         child: TextField(
+                          focusNode: focusNode,
                           controller: messageController,
                           onTap: () {
                             if (!showEmoji) {
@@ -188,6 +191,21 @@ class _ChatDetailsState extends State<ChatDetails> {
                         ),
                       )
                     ],
+                  ),
+
+                  Offstage(
+                    offstage: showEmoji,
+                    child: SizedBox(
+                      height: 300,
+
+                    //   child: EmojiPicker(
+                        
+                    //     onEmojiSelected:(emoji, category) {
+                    //   setState(() {
+                    //     showSend = true;
+                    //   });
+                    // }, )
+                     ),
                   ),
                 ],
               ),
